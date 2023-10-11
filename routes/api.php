@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\ApiAuthMiddleWare;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::post('/users', [UserController::class, 'register']);
+Route::post('/users/login', [UserController::class, 'login']);
+
+Route::middleware(ApiAuthMiddleWare::class)->group(function () {
+    // User
+    Route::get('/users/current', [UserController::class, 'get']);
+    Route::patch('/users/current', [UserController::class, 'update']);
+    Route::delete('/users/logout', [UserController::class, 'logout']);
 });

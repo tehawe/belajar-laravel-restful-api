@@ -101,6 +101,8 @@ class UserController extends Controller
         $user->token = null;
         $user->save();
 
-        return response()->json(['data' => true])->setStatusCode(200);
+        return response()
+            ->json(['data' => true])
+            ->setStatusCode(200);
     }
 }
